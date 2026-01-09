@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grammar Assistant</title>
+  <style>
+    body {
+      width: 320px;
+      padding: 0;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .popup-container {
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0 0 5px 0;
+      color: #333;
+    }
+
+    .tagline {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .status {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 11px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="popup-container">
+    <div class="header">
+      <h1>Mate</h1>
+      <p class="tagline">Real-time spelling and grammar checker</p>
+    </div>
+
+    <div class="status">
+      <span class="status-dot"></span>
+      Extension is Active
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="openOptions">
+        Settings
+      </button>
+      <a href="test.html" target="_blank" class="btn btn-secondary">
+        Test Extension
+      </a>
+    </div>
+
+    <div class="footer">
+      Version 1.0.0
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

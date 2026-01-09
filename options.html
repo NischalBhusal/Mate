@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grammar Assistant - Options</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin-right: 10px;
+      border-radius: 2px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .option:hover {
+      background: #f0f1f3;
+      transform: translateX(2px);
+    }
+
+    .option-info {
+      flex: 1;
+    }
+
+    .option-label {
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .option-description {
+      font-size: 13px;
+      color: #6c757d;
+      line-height: 1.5;
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      position: relative;
+      width: 56px;
+      height: 28px;
+      margin-left: 15px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .3s;
+      border-radius: 28px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    input:checked + .slider {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(28px);
+    }
+
+    /* Status message */
+    .status-message {
+      text-align: center;
+      padding: 12px;
+      background: #d4edda;
+      color: #155724;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .status-message.show {
+      opacity: 1;
+    }
+
+    /* Info box */
+    .info-box {
+      background: #e7f3ff;
+      border-left: 4px solid #2196F3;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+
+    .info-box-title {
+      font-weight: 600;
+      color: #1976D2;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .info-box-content {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .info-box ul {
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+
+    .info-box li {
+      margin-bottom: 4px;
+    }
+
+    .footer {
+      background: #f8f9fa;
+      padding: 20px 30px;
+      text-align: center;
+      font-size: 12px;
+      color: #6c757d;
+      border-top: 1px solid #e9ecef;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Mate</h1>
+      <p>Configure your spelling and grammar preferences</p>
+    </div>
+
+    <div class="content">
+      <div class="section">
+        <div class="section-title">General Settings</div>
+        
+        <div class="option">
+          <div class="option-info">
+            <div class="option-label">Auto-Correct</div>
+            <div class="option-description">
+              Automatically fix common spelling mistakes as you type (e.g., "teh" → "the")
+            </div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="autoCorrectToggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="info-box">
+          <div class="info-box-title">How It Works</div>
+          <div class="info-box-content">
+            This extension monitors text fields and provides real-time assistance:
+            <ul>
+              <li><strong>Auto-Correction:</strong> High-confidence errors are fixed automatically when enabled</li>
+              <li><strong>Smart Suggestions:</strong> Uncertain errors are underlined in red with suggestions on hover</li>
+              <li><strong>Performance:</strong> Debouncing ensures smooth typing without lag</li>
+              <li><strong>Privacy:</strong> All processing happens locally in your browser</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-message" id="statusMessage">
+        Settings saved successfully!
+      </div>
+    </div>
+
+    <div class="footer">
+      Mate v1.0.0
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

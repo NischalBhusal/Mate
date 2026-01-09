@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grammar Assistant - Test Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .test-section {
+      margin-bottom: 30px;
+    }
+
+    .test-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .test-title::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin-right: 12px;
+      border-radius: 2px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .editable-div {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      min-height: 120px;
+      background: white;
+      transition: border-color 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .editable-div:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .editable-div:empty::before {
+      content: attr(data-placeholder);
+      color: #999;
+    }
+
+    .info-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    .info-box-title {
+      font-weight: 600;
+      color: #856404;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .info-box-content {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .error-examples {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #666;
+      line-height: 1.8;
+    }
+
+    .error-examples strong {
+      color: #333;
+    }
+
+    code {
+      background: #e9ecef;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Test Mate</h1>
+      <p>Try typing common spelling mistakes to see the extension in action</p>
+    </div>
+
+    <div class="content">
+      <div class="info-box">
+        <div class="info-box-title">Testing Instructions</div>
+        <div class="info-box-content">
+          Try typing these common errors in any field below. High-confidence errors will be auto-corrected immediately, 
+          while low-confidence errors will be underlined in red with suggestions on hover.
+        </div>
+      </div>
+
+      <div class="test-section">
+        <div class="test-title">Input Field Test</div>
+        <label for="testInput">Single-line text input:</label>
+        <input 
+          type="text" 
+          id="testInput" 
+          placeholder="Type 'teh' or 'recieve' to test auto-correction..."
+        >
+      </div>
+
+      <div class="test-section">
+        <div class="test-title">Textarea Test</div>
+        <label for="testTextarea">Multi-line textarea:</label>
+        <textarea 
+          id="testTextarea" 
+          placeholder="Try typing: 'I cant beleive I recieved teh email seperately'"
+        ></textarea>
+      </div>
+
+      <div class="test-section">
+        <div class="test-title">ContentEditable Test</div>
+        <label>Rich text editor (contenteditable):</label>
+        <div 
+          class="editable-div" 
+          contenteditable="true" 
+          data-placeholder="Type here... Try 'alot' or 'everytime' to see suggestions"
+        ></div>
+      </div>
+
+      <div class="test-section">
+        <div class="test-title">Example Errors to Try</div>
+        <div class="error-examples">
+          <strong>Auto-corrected (high-confidence):</strong><br>
+          <code>teh</code> → the, 
+          <code>recieve</code> → receive, 
+          <code>occured</code> → occurred, 
+          <code>seperate</code> → separate, 
+          <code>definately</code> → definitely, 
+          <code>beleive</code> → believe, 
+          <code>freind</code> → friend
+          <br><br>
+          <strong>Suggested (low-confidence):</strong><br>
+          <code>alot</code> → a lot, 
+          <code>everytime</code> → every time, 
+          <code>aswell</code> → as well, 
+          <code>basicly</code> → basically, 
+          <code>probly</code> → probably
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
