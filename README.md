@@ -1,189 +1,78 @@
-# Grammar & Spelling Assistant
+# Mate | Grammar & Spelling Assistant
 
-A Chrome Extension that provides real-time spelling and grammar assistance as you type on any website.
+**mate** is a high-performance Chrome Extension (Manifest V3) that provides real-time spelling and grammar assistance as you type. It balances speed and accuracy to ensure your writing is professional and error-free across the entire web.
+
+---
 
 ## Features
 
-- Auto-Detection: Identifies common spelling and grammatical errors in real-time
-- Auto-Correction: Automatically fixes high-confidence errors (example: 'teh' to 'the')
-- Smart Suggestions: Underlines low-confidence errors in red with hover tooltips showing suggestions
-- Performance Optimized: Uses debouncing (300ms) to prevent lag during fast typing
-- Privacy-Focused: All processing happens locally in your browser
-- Customizable: Toggle auto-correct on or off via the options page
+* **Auto-Detection:** Identifies common spelling and grammatical errors in real-time.
+* **Auto-Correction:** Automatically fixes high-confidence errors (e.g., 'teh' to 'the', 'recieve' to 'receive').
+* **Smart Suggestions:** Underlines low-confidence errors in red with hover tooltips showing suggestions.
+* **Performance Optimized:** Uses a 300ms debounce to prevent lag during fast typing.
+* **Privacy-Focused:** All processing happens locally in your browser; no data is sent to external servers.
+* **Customizable:** Toggle auto-correct on or off via the options page.
 
 ## Supported Fields
 
 The extension monitors and assists with:
-- Text input fields
-- Text areas
-- Content-editable divs
+* Standard text input fields (`<input>`)
+* Text areas (`<textarea>`)
+* Content-editable divs (e.g., Gmail, LinkedIn, Facebook editors)
 
 ## Installation
 
-### Load Unpacked Extension (Development)
+1.  **Download:** Clone or download this repository.
+2.  **Open Extensions:** Navigate to `chrome://extensions/` in Google Chrome.
+3.  **Developer Mode:** Enable "Developer mode" in the top-right corner.
+4.  **Load Unpacked:** Click "Load unpacked" and select the extension directory containing `manifest.json`.
 
-1. Clone or download this repository
-2. Open Chrome and navigate to chrome://extensions/
-3. Enable "Developer mode" (toggle in top-right corner)
-4. Click "Load unpacked"
-5. Select the extension directory containing manifest.json
+## ⚙️ Technical Implementation
 
-### Icons Setup
+### DOM Handling
+* **Preservation:** Carefully handles text nodes to preserve website styling and layout.
+* **ContentEditable:** Uses a `TreeWalker` to traverse nodes and the **Range API** to restore cursor position after corrections.
+* **MutationObserver:** Automatically detects and attaches listeners to dynamically added input fields.
 
-The extension requires icons. You can:
-- Create your own icons (16x16, 48x48, 128x128 PNG files)
-- Or temporarily comment out the icons section in manifest.json for testing
+### Logic
+* **Debouncing Strategy:** A 300ms timer ensures smooth performance and reduced CPU usage.
+* **Non-Intrusive Styling:** Error underlines use `border-bottom` and high `z-index` (999999) tooltips to avoid conflicts with native site CSS.
 
-## How It Works
+### File Structure
 
-### High-Confidence Auto-Correction
+```text
+Mate|Grammar & Spelling Assistant
+├── manifest.json   # Extension manifest (V3)
+├── content.js      # Main content script (Logic)
+├── styles.css      # Error highlighting and tooltip styles
+├── options.html    # Options page UI
+├── options.js      # Options page logic
+├── popup.html      # Extension popup UI
+├── popup.js        # Popup logic
+└── test.html       # Development testing page
+```
 
-Over 1000 common misspellings are automatically fixed as you type when auto-correct is enabled.
+### Contributing
 
-Examples include:
-- teh to the
-- recieve to receive
-- occured to occurred
-- seperate to separate
-- definately to definitely
-- beleive to believe
-- freind to friend
-- wich to which
-- thier to their
-- dont to don't
-- cant to can't
+```text
+Fork the Project.
 
-### Low-Confidence Suggestions
+Create your Feature Branch (git checkout -b feature/AmazingFeature).
 
-These errors are underlined in red with suggestions shown on hover:
-- alot suggests a lot
-- everytime suggests every time
-- aswell suggests as well
-- basicly suggests basically
-- probly suggests probably
-- realy suggests really
+Commit your Changes (git commit -m 'Add AmazingFeature').
 
-## Technical Implementation
+Push to the Branch (git push origin feature/AmazingFeature).
 
-### Text Node Handling Without Breaking Styling
-
-The extension carefully handles text nodes to preserve website styling:
-
-For Regular Input or Textarea Elements:
-- Uses direct value manipulation
-- Preserves cursor position after corrections
-- No DOM modification required
-
-For ContentEditable Elements:
-- Creates a TreeWalker to traverse text nodes
-- Wraps error text in span elements with grammar-error class
-- Uses minimal inline styles to avoid conflicts
-- Restores cursor position using Range API
-- Normalizes text nodes after modifications to merge adjacent nodes
-
-Cursor Position Preservation:
-The system saves cursor offset before modification and restores position after changes are applied.
-
-Non-Intrusive Styling:
-- Uses high z-index (999999) for tooltips
-- Applies minimal background color changes
-- Red underline using border-bottom instead of text decoration
-- All styles are scoped to grammar-error class
-
-### Debouncing Strategy
-
-The extension uses a 300ms debounce timer to optimize performance. This approach ensures no lag during fast typing, reduced CPU usage, and smooth user experience.
-
-### Dynamic Element Detection
-
-Uses MutationObserver to detect dynamically added input fields and automatically attaches listeners to new fields.
-
-## Options
-
-Access the options page to customize behavior:
-
-1. Click the extension icon in Chrome toolbar
-2. Click Settings button
-3. Toggle Auto-Correct on or off
-
-Settings are synced across devices using Chrome's sync storage.
-
-## Testing
-
-1. Open test.html in Chrome after loading the extension
-2. Try typing common errors in the test fields
-3. Observe high-confidence errors being auto-corrected, low-confidence errors being underlined, tooltips appearing on hover, and smooth performance during fast typing
-
-## File Structure
-
-mate/
-- manifest.json (Extension manifest with Manifest V3)
-- content.js (Main content script)
-- styles.css (Error highlighting and tooltip styles)
-- options.html (Options page UI)
-- options.js (Options page logic)
-- popup.html (Extension popup UI)
-- popup.js (Popup logic)
-- test.html (Test page for development)
-- README.md (Documentation)
-
-## Permissions
-
-The extension requires:
-
-- activeTab: Access to the active tab for content script injection
-- storage: Store user preferences
-- scripting: Inject content scripts into web pages
-- host_permissions for all_urls: Monitor input fields on all websites
-
-All processing is done locally and no data is sent to external servers.
-
-## Customization
-
-### Adding New Error Rules
-
-Edit ERROR_DATABASE in content.js to add new auto-corrections or suggestions.
-
-### Adjusting Debounce Timing
-
-Modify DEBOUNCE_DELAY in content.js (change to 500 for slower checking).
-
-### Styling Errors
-
-Customize appearance in styles.css by modifying the grammar-error class properties.
-
-## Integration with External APIs
-
-For production use, consider integrating with:
-
-- LanguageTool API: Advanced grammar checking
-- Grammarly API: Professional writing assistance
-- OpenAI GPT: Context-aware suggestions
-
-Replace the ERROR_DATABASE with API calls in the checkAndCorrectText function.
+Open a Pull Request.
+```
 
 ## License
+**MIT License**
 
-MIT License
+Copyright (c) 2026 mate
 
-## Known Limitations
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-1. Works best with plain text; complex HTML in contenteditable may have issues
-2. Does not handle extremely large text blocks (over 10,000 characters)
-3. Basic error database; real-world apps should use professional APIs
-4. May conflict with other grammar or spelling extensions
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-## Future Enhancements
-
-- Context-aware grammar suggestions
-- Support for multiple languages
-- Custom dictionary for technical terms
-- Performance metrics dashboard
-- Integration with external grammar APIs
-- Keyboard shortcuts for accepting or rejecting suggestions
-
-## Contributing
-
-Contributions are welcome. Please ensure code follows existing style patterns, new features include test cases, and documentation is updated.
-
-Made for better writing.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
